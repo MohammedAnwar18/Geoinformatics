@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>خطة برنامج فرعي الجيوانفورماتكس</title>
+    <!-- استيراد خط تجوال لعرض عربي عصري ومقروء -->
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #006c35; /* لون قريب من هوية جامعة بيرزيت */
+            --accent-color: #fdb913;
+            --bg-color: #f8f9fa;
+            --card-bg: #ffffff;
+            --text-dark: #2d3436;
+            --text-muted: #636e72;
+            --border-radius: 16px;
+            --shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Tajawal', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-dark);
+            line-height: 1.6;
+            padding: 20px 16px;
+        }
+
+        .container {
+            max-width: 600px; /* تحسين العرض للهاتف */
+            margin: 0 auto;
+        }
+
+        /* رأس الصفحة */
+        header {
+            text-align: center;
+            margin-bottom: 24px;
+        }
+
+        .uni-name {
+            font-size: 1.1rem;
+            color: var(--text-muted);
+            font-weight: 500;
+        }
+
+        .program-title {
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: var(--primary-color);
+            margin-top: 4px;
+        }
+
+        /* ملخص الخطة */
+        .summary-card {
+            background: linear-gradient(135deg, var(--primary-color), #005a2b);
+            color: white;
+            padding: 24px;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            margin-bottom: 32px;
+            display: flex;
+            justify-content: space-around;
+            text-align: center;
+        }
+
+        .summary-item .num {
+            font-size: 2rem;
+            font-weight: 800;
+            line-height: 1;
+            margin-bottom: 4px;
+        }
+
+        .summary-item .label {
+            font-size: 0.85rem;
+            opacity: 0.9;
+        }
+
+        /* أقسام المساقات */
+        .section-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--text-dark);
+        }
+
+        .section-title::before {
+            content: '';
+            display: block;
+            width: 6px;
+            height: 24px;
+            background-color: var(--accent-color);
+            border-radius: 4px;
+        }
+
+        .subtitle {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            font-weight: 400;
+            margin-right: auto;
+        }
+
+        /* بطاقات المساقات */
+        .course-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-bottom: 32px;
+        }
+
+        .course-card {
+            background: var(--card-bg);
+            padding: 16px;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.03);
+            border: 1px solid rgba(0,0,0,0.05);
+            transition: transform 0.2s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .course-card:active {
+            transform: scale(0.98);
+        }
+
+        /* شريط جانبي ملون لكل بطاقة */
+        .course-card::after {
+            content: '';
+            position: absolute;
+            right: 0;
+            top: 0;
+            bottom: 0;
+            width: 4px;
+            background-color: #e0e0e0;
+        }
+        
+        .compulsory .course-card::after { background-color: var(--primary-color); }
+        .elective .course-card::after { background-color: var(--accent-color); }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+
+        .course-code {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* للأرقام الإنجليزية */
+            font-weight: 700;
+            font-size: 0.95rem;
+            color: var(--primary-color);
+            background-color: rgba(0, 108, 53, 0.08);
+            padding: 4px 8px;
+            border-radius: 6px;
+        }
+
+        .credits {
+            font-size: 0.8rem;
+            font-weight: 700;
+            color: var(--text-muted);
+            background: #f1f2f6;
+            padding: 3px 8px;
+            border-radius: 20px;
+        }
+
+        .course-name {
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+            color: #2d3436;
+        }
+
+        .prerequisite {
+            font-size: 0.85rem;
+            color: #7f8c8d;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        
+        .prerequisite span {
+            font-family: 'Segoe UI', sans-serif;
+            font-weight: 600;
+            dir: ltr; /* لظهور رموز المواد بشكل صحيح */
+        }
+
+        .note-box {
+            background-color: #fff3cd;
+            color: #856404;
+            padding: 12px;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            margin-bottom: 24px;
+            border-right: 4px solid #ffeeba;
+        }
+
+        /* تحسينات للشاشات الأكبر قليلاً */
+        @media (min-width: 768px) {
+            .course-list {
+                display: grid;
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <header>
+            <div class="uni-name">جامعة بيرزيت</div>
+            <h1 class="program-title">برنامج فرعي الجيوانفورماتكس</h1>
+            <div style="font-size: 0.9rem; color: #777; margin-top: 5px;">Geoinformatics Minor</div>
+        </header>
+
+        <!-- ملخص الساعات -->
+        <div class="summary-card">
+            <div class="summary-item">
+                <div class="num">27</div>
+                <div class="label">المجموع الكلي</div>
+            </div>
+            <div class="summary-item">
+                <div class="num">18</div>
+                <div class="label">ساعات إجبارية</div>
+            </div>
+            <div class="summary-item">
+                <div class="num">9</div>
+                <div class="label">ساعات اختيارية</div>
+            </div>
+        </div>
+
+        <!-- ملاحظة مهمة -->
+        <!-- <div class="note-box">
+            في حال حصول الطالب على أي من المساقات الإجبارية في تخصصه الرئيسي فيسجل له مساقاً بديلاً حسب ما تراه الدائرة مناسباً.
+        </div> -->
+
+        <!-- المتطلبات الإجبارية -->
+        <div class="compulsory">
+            <div class="section-title">
+                المساقات الإجبارية
+                <span class="subtitle">(18 ساعة معتمدة)</span>
+            </div>
+            
+            <div class="course-list">
+                <!-- GEOI2340 -->
+                <div class="course-card">
+                    <div class="card-header">
+                        <span class="course-code">GEOI2340</span>
+                        <span class="credits">3 ساعات</span>
+                    </div>
+                    <div class="course-name">مدخل إلى نظم المعلومات الجغرافية</div>
+                    <div class="prerequisite">
+                        المتطلب السابق: <span>GEOG232 أو ENCE338</span>
+                    </div>
+                </div>
+
+                <!-- GEOG232 -->
+                <div class="course-card">
+                    <div class="card-header">
+                        <span class="course-code">GEOG232</span>
+                        <span class="credits">3 ساعات</span>
+                    </div>
+                    <div class="course-name">مبادئ الخرائط (الكارتوغرافيا)</div>
+                    <div class="prerequisite">
+                        المتطلب السابق: لا يوجد
+                    </div>
+                </div>
+
+                <!-- GEOI2360 -->
+                <div class="course-card">
+                    <div class="card-header">
+                        <span class="course-code">GEOI2360</span>
+                        <span class="credits">3 ساعات</span>
+                    </div>
+                    <div class="course-name">تقنيات جمع البيانات الجغرافية</div>
+                    <div class="prerequisite">
+                        المتطلب السابق: <span>GEOI2340</span>
+                    </div>
+                </div>
+
+                <!-- GEOI3320 -->
+                <div class="course-card">
+                    <div class="card-header">
+                        <span class="course-code">GEOI3320</span>
+                        <span class="credits">3 ساعات</span>
+                    </div>
+                    <div class="course-name">قواعد البيانات الجغرافية</div>
+                    <div class="prerequisite">
+                        المتطلب السابق: <span>GEOI2340</span>
+                    </div>
+                </div>
+
+                <!-- GEOI3340 -->
+                <div class="course-card">
+                    <div class="card-header">
+                        <span class="course-code">GEOI3340</span>
+                        <span class="credits">3 ساعات</span>
+                    </div>
+                    <div class="course-name">التحليل الإحصائي الحيزي</div>
+                    <div class="prerequisite">
+                        المتطلب السابق: <span>GEOI2340</span>
+                    </div>
+                </div>
+
+                <!-- GEOG335 -->
+                <div class="course-card">
+                    <div class="card-header">
+                        <span class="course-code">GEOG335</span>
+                        <span class="credits">3 ساعات</span>
+                    </div>
+                    <div class="course-name">مدخل إلى الاستشعار عن بعد</div>
+                    <div class="prerequisite">
+                        المتطلب السابق: <span>GEOG232 أو ENCE338</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="note-box">
+            <strong>ملاحظة:</strong> في حال حصول الطالب على أي من المساقات الإجبارية في تخصصه الرئيسي فيسجل له مساقاً بديلاً حسب ما تراه الدائرة مناسباً.
+        </div>
+
+        <!-- المتطلبات الاختيارية -->
+        <div class="elective">
+            <div class="section-title">
+                المساقات الاختيارية
+                <span class="subtitle">(اختر 9 ساعات)</span>
+            </div>
+
+            <div class="course-list">
+                <!-- GEOG336 -->
+                <div class="course-card">
+                    <div class="card-header">
+                        <span class="course-code">GEOG336</span>
+                        <span class="credits">3 ساعات</span>
+                    </div>
+                    <div class="course-name">جغرافية البيئة</div>
+                    <div class="prerequisite">
+                        المتطلب السابق: -
+                    </div>
+                </div>
+
+                <!-- GEOI3330 -->
+                <div class="course-card">
+                    <div class="card-header">
+                        <span class="course-code">GEOI3330</span>
+                        <span class="credits">3 ساعات</span>
+                    </div>
+                    <div class="course-name">التحليل السكاني والنمذجة المكانية</div>
+                    <div class="prerequisite">
+                        المتطلب السابق: <span>GEOI2340</span>
+                    </div>
+                </div>
+
+                <!-- GEOI3350 -->
+                <div class="course-card">
+                    <div class="card-header">
+                        <span class="course-code">GEOI3350</span>
+                        <span class="credits">3 ساعات</span>
+                    </div>
+                    <div class="course-name">تحليل استخدامات الأراضي والغطاء الأرضي</div>
+                    <div class="prerequisite">
+                        المتطلب السابق: <span>GEOI2340</span>
+                    </div>
+                </div>
+
+                <!-- GEOI3390 -->
+                <div class="course-card">
+                    <div class="card-header">
+                        <span class="course-code">GEOI3390</span>
+                        <span class="credits">3 ساعات</span>
+                    </div>
+                    <div class="course-name">تطبيقات نظم المعلومات الجغرافية في قضايا البيئة</div>
+                    <div class="prerequisite">
+                        المتطلب السابق: <span>GEOI2340</span>
+                    </div>
+                </div>
+
+                <!-- GEOI4310 -->
+                <div class="course-card">
+                    <div class="card-header">
+                        <span class="course-code">GEOI4310</span>
+                        <span class="credits">3 ساعات</span>
+                    </div>
+                    <div class="course-name">النمذجة الرقمية للتضاريس</div>
+                    <div class="prerequisite">
+                        المتطلب السابق: <span>GEOI2340</span>
+                    </div>
+                </div>
+
+                <!-- GEOI4320 -->
+                <div class="course-card">
+                    <div class="card-header">
+                        <span class="course-code">GEOI4320</span>
+                        <span class="credits">3 ساعات</span>
+                    </div>
+                    <div class="course-name">تطبيقات نظم المعلومات الجغرافية في الخدمات الاجتماعية</div>
+                    <div class="prerequisite">
+                        المتطلب السابق: <span>GEOI2340</span>
+                    </div>
+                </div>
+
+                <!-- GEOI4340 -->
+                <div class="course-card">
+                    <div class="card-header">
+                        <span class="course-code">GEOI4340</span>
+                        <span class="credits">3 ساعات</span>
+                    </div>
+                    <div class="course-name">نظم المعلومات الجغرافية في تخطيط المواصلات</div>
+                    <div class="prerequisite">
+                        المتطلب السابق: <span>GEOI2340</span>
+                    </div>
+                </div>
+
+                <!-- GEOI4360 -->
+                <div class="course-card">
+                    <div class="card-header">
+                        <span class="course-code">GEOI4360</span>
+                        <span class="credits">3 ساعات</span>
+                    </div>
+                    <div class="course-name">الخدمات المبنية على الموقع وتطبيقاتها</div>
+                    <div class="prerequisite">
+                        المتطلب السابق: <span>GEOI2340</span>
+                    </div>
+                </div>
+
+                 <!-- GEOI4370 -->
+                 <div class="course-card">
+                    <div class="card-header">
+                        <span class="course-code">GEOI4370</span>
+                        <span class="credits">3 ساعات</span>
+                    </div>
+                    <div class="course-name">إدارة مشاريع نظم المعلومات الجغرافية</div>
+                    <div class="prerequisite">
+                        المتطلب السابق: <span>GEOI2340</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
